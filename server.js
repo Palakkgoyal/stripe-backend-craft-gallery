@@ -1,12 +1,12 @@
-const dotenv = require("dotenv")
+const dotenv = require("dotenv");
+dotenv.config({path: "./config.env"});
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
-const PORT = process.env.PORT
+const PORT = process.env.PORT;
 
 const express = require('express');
 var cors = require('cors');
 const stripe = require('stripe')(STRIPE_SECRET_KEY);
 
-dotenv.config({path: "./config.env"});
 
 
 const app = express();
@@ -15,6 +15,11 @@ app.use(cors({
 }));
 app.use(express.static("public"));
 app.use(express.json());
+
+app.get("/", (req, res) => {
+    res.send("<h1>Working Fine</h1>");
+  });
+  
 
 app.post("/checkout", async (req, res) => {
     /*
@@ -58,4 +63,4 @@ app.post("/checkout", async (req, res) => {
     }));
 });
 
-app.listen(PORT, () => console.log("Listening on port"));
+app.listen(PORT, () => console.log("Listening on port", PORT));
